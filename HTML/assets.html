@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+    
+</head>
+<body>
+    <div>
+       
+       <div id="result"></div>
+       
+    </div>
+    <script >
+        //let result=[{"AppraisedValue":300,"Color":"blue","ID":"asset1","Owner":"Tomoko","Size":5,"docType":"asset"},{"AppraisedValue":400,"Color":"red","ID":"asset2","Owner":"Brad","Size":5,"docType":"asset"},{"AppraisedValue":500,"Color":"green","ID":"asset3","Owner":"Jin Soo","Size":10,"docType":"asset"},{"AppraisedValue":"1300","Color":"yellow","ID":"asset313","Owner":"Tom","Size":"5"},{"AppraisedValue":600,"Color":"yellow","ID":"asset4","Owner":"Max","Size":10,"docType":"asset"},{"AppraisedValue":700,"Color":"black","ID":"asset5","Owner":"Adriana","Size":15,"docType":"asset"},{"AppraisedValue":800,"Color":"white","ID":"asset6","Owner":"Michel","Size":15,"docType":"asset"}]
+        console.log("asset")
+        let result=[]
+        axios.get('http://localhost:3001/api/getAllAssets').then( response => {
+            //const resEle = document.getElementById('result');
+            //console.log(response.data);
+            //console.log(resEle)
+            result=response.data.assets;
+            console.log(result)
+            console.log(typeof(result))
+            result=Array.from(JSON.parse(result))
+            //console.log(tmp)
+            //onsole.log(typeof([1,2,32,4]))
+
+            const resEle = document.getElementById('result');
+        //console.log(resEle)
+        //resEle.style.display="block" //to apper which button is clicked
+            if(resEle.childNodes.length>1)
+            {
+                console.log(resEle.childNodes.length)
+                
+            }
+            else{
+            resEle.setAttribute("class","r")
+            console.log(resEle)
+            let keys=Object.keys(result[0]);
+            let size=keys.length //size of the columns
+            let row=document.createElement("div");
+            keys.forEach((item)=>{
+                let child=document.createElement("h1")
+                child.textContent=item;
+                row.appendChild(child)
+            })
+            resEle.append(row)
+            result.forEach((item)=>{
+                let row=document.createElement("div");
+                let values=Object.values(item);
+                while(values.length<size)values.push(""); //to make entries even
+                values.forEach((item)=>{
+                    let child=document.createElement("p")
+                    child.textContent=item
+                    row.appendChild(child)
+                })
+                resEle.append(row)      
+                    
+            })
+
+        }
+        })
+        .catch(error=> {
+            console.error('ohh shit',error);
+        });
+        //console.log(Res)
+    
+        
+        
+    
+            //console.log(response.data);
+            //console.log(resEle)
+    
+    // result.forEach((item)=>{
+    //     let child=document.createElement("p");
+    //     child.textContent=JSON.stringify(item)
+        
+        
+    // })
+    
+    
+
+    </script>
+    
+ 
+
+ 
+</body>
+</html>

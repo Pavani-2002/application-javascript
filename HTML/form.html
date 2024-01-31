@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+    
+</head>
+<body>
+    <div>
+        <form id="createAssetForm" class="form"> 
+            <div>
+                <label for="idInput">Id:</label>   
+                <input type="text" id="idInput"> 
+            </div> 
+            <div>
+                <label for="colorInput">Color:</label> 
+                <input type="text" id="colorInput">
+            </div> 
+            <div>
+                <label for="sizeInput">Size:</label>  
+                <input type="number" id="sizeInput"> 
+            </div>  
+             <div>
+                <label for="ownerInput">Owner:</label> 
+                <input type="text" id="ownerInput">
+             </div> 
+             <div>
+                <label for="valueInput">Appraised Value:</label>  
+                <input type="number" id="valueInput"> 
+             </div> 
+             <div style="justify-content: center;">
+                <button id="createAssetBtn" class="btn">Create Asset</button>
+
+             </div>
+            
+        </form>
+
+        
+        <p id="result2" style="text-align: center;margin-top:10px;"> </p>
+    </div>   
+    
+ <script> 
+    
+    document.getElementById('createAssetBtn').addEventListener('click', function (e) {
+
+    e.preventDefault();
+    const id = document.getElementById('idInput').value;
+    const color = document.getElementById('colorInput').value;
+    const size = document.getElementById('sizeInput').value;
+    const owner = document.getElementById('ownerInput').value;
+    const appraisedValue = document.getElementById('valueInput').value;
+    
+
+    // Perform the Axios POST request to create an asset
+    axios.post('http://localhost:3001/api/createAsset', {
+        id: id,
+        color: color,
+        size: size,
+        owner: owner,
+        appraisedValue: appraisedValue
+    }, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    }).then(response => {
+        const resEle = document.getElementById('result2');
+        resEle.textContent = "Asset submitted Successfully"
+        resEle.style.color="green"
+        console.log(response.data);
+    }).catch(error => {
+        const resEle = document.getElementById('result2');
+        resEle.textContent = "Invalid Input"
+        resEle.style.color="red"
+        console.error('Error creating asset:', error);
+    });
+});
+
+</script>
+ 
+</body>
+</html>
+ 

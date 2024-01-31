@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+    
+</head>
+<body>
+    <div>
+        <form class="form" id="update"> 
+            <div>
+                <label for="idInput">Id:</label>   
+                <input type="text" id="idInput"> 
+            </div> 
+            <div style="justify-content: center;">
+                <button id="updateAssetBtn" class="btn">Update Asset</button>
+            </div>
+        </form>
+        <form id="updateAssetForm" class="form" style="display: none;"> 
+            
+            <div>
+                <label for="assetIdInput">ID:</label> 
+                <input type="text" id="assetIdInput">
+            </div> 
+            <div>
+                <label for="colorInput">Color:</label> 
+                <input type="text" id="colorInput">
+            </div> 
+            <div>
+                <label for="sizeInput">Size:</label>  
+                <input type="number" id="sizeInput"> 
+            </div>  
+             <div>
+                <label for="ownerInput">Owner:</label> 
+                <input type="text" id="ownerInput">
+             </div> 
+             <div>
+                <label for="valueInput">Appraised Value:</label>  
+                <input type="number" id="valueInput"> 
+             </div> 
+             <div style="justify-content: center;">
+                <button id="updateBtn" class="btn">Update Asset</button>
+
+             </div>
+            
+        </form>
+        <div id="error" style="display: none; text-align: center; margin: auto; color: red">
+            Error: Asset doesn't exits.
+        </div>
+        
+        
+        
+
+        
+       
+    </div>
+    <script>
+
+        document.getElementById('updateAssetBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        const assetId = document.getElementById('idInput').value;
+
+        axios.get(`http://localhost:3001/api/ReadAsset/${assetId}`)
+        .then(response => {
+            //const resultContainer = document.getElementById('readAsset');
+            //respons
+        document.getElementById('assetIdInput').value = response.data.ID;
+        document.getElementById('colorInput').value  = response.data.Color;
+        document.getElementById('sizeInput').value = response.data.Size;
+        document.getElementById('ownerInput').value = response.data.Owner;
+        document.getElementById('valueInput').value = response.data.AppraisedValue;
+        document.getElementById('updateAssetForm').style.display="block";
+        document.getElementById('update').style.display="none";
+        })
+        .catch(error => {
+            document.getElementById('error').style.display="block";
+            console.error('Error reading asset:', error);
+        });
+});
+
+    
+            document.getElementById('updateBtn').addEventListener('click', function () {
+            const id = document.getElementById('assetIdInput').value;
+            const color = document.getElementById('colorInput').value;
+            const size = document.getElementById('sizeInput').value;
+            const owner = document.getElementById('ownerInput').value;
+            const appraisedValue = document.getElementById('valueInput').value;
+            
+    
+
+    // Perform the Axios POST request to update an asset
+    axios.post(`http://localhost:3001/api/updateAsset/${id}`, {
+        id: id,
+        color: color,
+        size: size,
+        owner: owner,
+        appraisedValue: appraisedValue
+        
+    }, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    }).then(response => {
+         const resEle = document.getElementById('error');
+         resEle.textContent = "Asset updated successfully";
+         resEle.display="block";
+         resEle.style.color="green";
+        // console.log(response.data);
+        result = Array.from(JSON.parse(response.data.assets));
+    }).catch(error => {
+        const resEle = document.getElementById('error');
+        resEle.textContent = "Update failed check the input and try again";
+        resEle.display="block";
+        resEle.style.color="red";
+        console.error('Error creating asset:', error);
+    });
+});
+
+
+            //let result=[{"AppraisedValue":300,"Color":"blue","ID":"asset1","Owner":"Tomoko","Size":5,"docType":"asset"},{"AppraisedValue":400,"Color":"red","ID":"asset2","Owner":"Brad","Size":5,"docType":"asset"},{"AppraisedValue":500,"Color":"green","ID":"asset3","Owner":"Jin Soo","Size":10,"docType":"asset"},{"AppraisedValue":"1300","Color":"yellow","ID":"asset313","Owner":"Tom","Size":"5"},{"AppraisedValue":600,"Color":"yellow","ID":"asset4","Owner":"Max","Size":10,"docType":"asset"},{"AppraisedValue":700,"Color":"black","ID":"asset5","Owner":"Adriana","Size":15,"docType":"asset"},{"AppraisedValue":800,"Color":"white","ID":"asset6","Owner":"Michel","Size":15,"docType":"asset"}]
+            // let ind=-1;
+            // const Id=document.getElementById("idInput").value;
+            // //console.log(Id)
+            // for(let i=0;i<result.length; i++)
+            // {
+            //     let item=result[i];
+            //     if(item.ID==Id)
+            //     {
+                    
+            //         ind=i;
+            //         break;
+            //     }
+            //     //console.log(item.ID)
+            // }
+            // if(ind!=-1)
+            // {
+            //     document.getElementById('updateAssetForm').style.display="block";
+            //     document.getElementById('colorInput').value=result[ind].Color;
+            //     document.getElementById('sizeInput').value=result[ind].Size;
+            //     document.getElementById('ownerInput').value=result[ind].Owner;
+            //     document.getElementById('valueInput').value=result[ind].AppraisedValue;
+            //     //to display form
+            //     console.log(parent.childNodes)
+            //     document.getElementById('update').style.display="none"
+            //     document.getElementById('error').style.display="none";
+            // }
+            // else{
+            //     document.getElementById('error').style.display="block";
+                
+
+            // }
+
+            
+            
+
+
+
+        
+    </script>
+    
+    
+ 
+
+ 
+</body>
+</html>
+ 

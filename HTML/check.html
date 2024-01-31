@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+    
+</head>
+<body>
+    <div>
+        <div style="text-align: center; padding-top: 20px;" class="form">
+            <div>
+                <label for="idInput" style="font-weight: bold;">Id:</label>   
+                <input type="text" id="idInput"> 
+            </div>
+            <div style="margin:15px;">
+                <button id="checkAssetBtn" class="btn">Check Asset</button>
+             </div> 
+
+        </div>
+        <div >
+            <p id="readAsset">
+            
+            </p>
+
+        </div>
+        
+
+    </div>
+    
+    
+ 
+<script>
+    //console.log("check");
+    document.getElementById('checkAssetBtn').addEventListener('click',()=> {
+    const assetId = document.getElementById('idInput').value;
+    console.log(assetId);
+    axios.get(`http://localhost:3001/api/ReadAsset/${assetId}`)
+        .then(response => {
+            const resultContainer = document.getElementById('readAsset');
+            resultContainer.style.color="green";
+            resultContainer.textContent = JSON.stringify(response.data);
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(error => {
+            const resultContainer = document.getElementById('readAsset');
+            resultContainer.style.color="red";
+            resultContainer.textContent = "Asset with given Id doen't exit";
+
+            console.error('Error reading asset:', error);
+        });
+});
+</script>
+ 
+</body>
+</html>
+ 

@@ -1,0 +1,94 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+#result{
+    background-color:antiquewhite;
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+    
+}
+.r{
+    display: block;
+   
+}
+.r div{
+    display:flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+   
+    
+    
+}
+.r div p{
+    width: 150px; 
+    height: inherit;
+    padding: 5px;
+    overflow: hidden;
+    
+}
+.r div h1{
+    width: 150px; 
+   
+    height: inherit;
+    font-size: large;
+    padding: 5px;
+    overflow: hidden;
+}
+.btn{
+    display: inline-block;
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    color: black; 
+    border-radius: 5px; /* Rounded corners */
+   
+}
+.btn:hover{
+    background-color: #4CAF50;
+    color: black;
+
+}
+.form{
+    width: 500px;
+    height:fit-content;
+    margin: 9px auto; /* Center the form horizontally */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color:cadetblue;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;  
+    
+}
+.form div{
+    display: flex;
+    justify-content: space-between;
+    margin:10px;
+    
+
+}
+.form div label{
+    font-weight: bold;
+}
+#readAsset{
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+    font-size: bolder;
+    font-size: larger;
+    width: fit-content;
+
+}
+
+
+

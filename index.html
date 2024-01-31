@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+</head>
+<body>
+    <div>
+        <h1 style="text-align: center;">Blockchain</h1>
+        <h1 style="text-align: center;">HyperLedger Fabric</h1>
+        <div  style="padding: 20px;text-align:center;">
+            <button id="getResult" class="btn"><a href="Html/assets.html">Get Assets</a></button>
+            <button id="createAssets" class="btn"><a href="Html/form.html">Create Assets</a></button>
+            <button id="checkAsset" class="btn"><a href="Html/check.html">Check Asset</a></button>
+            <button id="updateAsset" class="btn"><a href="Html/uform.html">Update Asset</a></button>
+        </div>
+        
+    </div>
+ 
+</body>
+</html>
+ 
+<!--
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+</head>
+<body style="background-color: bisque;">
+<button id="getResult" style="color:cadetblue" >Get All Assets</button>
+<br/>
+
+
+<form id="createAssetForm">  
+    <label for="idInput">Id:</label> <br>  
+    <input type="text" id="idInput">  <br> <br>  
+
+    <label for="colorInput">Color:</label> <br>  
+    <input type="text" id="colorInput">  <br> <br>  
+
+    <label for="sizeInput">Size:</label> <br>  
+    <input type="number" id="sizeInput">  <br> <br>  
+
+    <label for="ownerInput">Owner:</label> <br>  
+    <input type="text" id="ownerInput"> <br> <br>  
+
+    <label for="valueInput">Appraised Value:</label> <br>  
+    <input type="number" id="valueInput">  <br> <br>  
+
+    <button id="createAssetBtn" style="color:red">Create Asset</button>
+</form>
+
+
+
+<form id="readAssetForm">
+    <label for="assetIdInput">Asset ID:</label>
+    <input type="text" id="assetIdInput">
+</form>
+<button id="readAssetBtn" style="color: blue;">Read Asset</button>
+
+<form id="AssetExistForm">
+    <label for="assetIdExist">Asset ID:</label>
+    <input type="text" id="assetIdExist">
+</form>
+<button id="ExistAssetBtn" style="color: blue;">Check Asset Exist</button>
+
+<label for ="myasset">Asset ID:</label>
+<input type ="text" id = "myasset">
+<button id="getAssetBtn" style="color: blue;">Get Asset</button>
+
+<form id="updateAssetForm">
+    <label for="updateAssetIdInput">Asset ID:</label>
+    <input type="text" id="updateAssetIdInput" readonly>
+    <br>
+
+    <label for="updatecolorInput">Color:</label> <br>  
+    <input type="text" id="updatecolorInput"><br> <br>  
+
+    <label for="updatesizeInput">Size:</label> <br>  
+    <input type="number" id="updatesizeInput">  <br> <br>  
+
+    <label for="updateownerInput">Owner:</label> <br>  
+    <input type="text" id="updateownerInput">  <br> <br>  
+
+    <label for="updatevalueInput">Appraised Value:</label> <br>  
+    <input type="number" id="updatevalueInput">  <br> <br>  
+
+</form>
+
+
+<button id="updateAssetBtn" style="color: orange;">Update Asset</button>
+
+ Container to Display Result of Asset Update 
+<p id="updateResult"></p>
+
+<p id="result"> </p>
+<p id="readAsset"></p>
+<p id ="ExistAsset"></p>
+<p id="result2"> </p>
+<p id="updateAsset"></p>
+ 
+<script>
+// document.getElementById('getResult').addEventListener('click', function () {
+//         axios.get('http://localhost:3001/api/getAllAssets').then( response => {
+//             const resEle = document.getElementById('result');
+//             //console.log(response.data);
+//             //console.log(resEle)
+//             resEle.textContent = JSON.stringify(response.data);
+//         })
+//         .catch(error=> {
+//             console.error('ohh shit',error);
+//         });
+//     });
+    
+//     document.getElementById('createAssetBtn').addEventListener('click', function () {
+//     const id = document.getElementById('idInput').value;
+//     const color = document.getElementById('colorInput').value;
+//     const size = document.getElementById('sizeInput').value;
+//     const owner = document.getElementById('ownerInput').value;
+//     const appraisedValue = document.getElementById('valueInput').value;
+    
+
+//     // Perform the Axios POST request to create an asset
+//     axios.post('http://localhost:3001/api/createAsset', {
+//         id: id,
+//         color: color,
+//         size: size,
+//         owner: owner,
+//         appraisedValue: appraisedValue
+//     }, {
+//     headers: {
+//         'Content-Type': 'application/json'
+//     }
+//     }).then(response => {
+//         const resEle = document.getElementById('result2');
+//         resEle.textContent = JSON.stringify(response.data);
+//         console.log(response.data);
+//     }).catch(error => {
+//         console.error('Error creating asset:', error);
+//     });
+// });
+
+document.getElementById('readAssetBtn').addEventListener('click', function () {
+    const assetId = document.getElementById('assetIdInput').value;
+
+    axios.get(`http://localhost:3001/api/ReadAsset/${assetId}`)
+        .then(response => {
+            const resultContainer = document.getElementById('readAsset');
+            resultContainer.textContent = JSON.stringify(response.data);
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(error => {
+            console.error('Error reading asset:', error);
+        });
+});
+//let x=10;
+document.getElementById('getAssetBtn').addEventListener('click', function () {
+    const assetId = document.getElementById('myasset').value;
+
+    axios.get(`http://localhost:3001/api/ReadAsset/${assetId}`)
+        .then(response => {
+            //const resultContainer = document.getElementById('readAsset');
+            //respons
+        document.getElementById('updateAssetIdInput').value = response.data.ID;
+        document.getElementById('updatecolorInput').value  = response.data.Color;
+        document.getElementById('updatesizeInput').value = response.data.Size;
+        document.getElementById('updateownerInput').value = response.data.Owner;
+        document.getElementById('updatevalueInput').value = response.data.AppraisedValue;
+        })
+        .catch(error => {
+            console.error('Error reading asset:', error);
+        });
+});
+
+document.getElementById('ExistAssetBtn').addEventListener('click', function () {
+    const assetId = document.getElementById('assetIdExist').value;
+
+    axios.get(`http://localhost:3001/api/ExistAsset/${assetId}`)
+        .then(response => {
+            const resultContainer = document.getElementById('ExistAsset');
+            resultContainer.textContent = JSON.stringify(response.data);
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(error => {
+            console.error('Error reading asset:', error);
+        });
+});
+
+
+//update Asset function
+
+// function updateInputFields() {
+//         const selectedProperty = document.getElementById('updatePropertySelect').value;
+
+//         // Hide all input fields
+//         document.getElementById('sizeInputLabel').style.display = 'none';
+//         document.getElementById('updateSizeInput').style.display = 'none';
+//         document.getElementById('ownerInputLabel').style.display = 'none';
+//         document.getElementById('updateOwnerInput').style.display = 'none';
+//         document.getElementById('appraisedValueInputLabel').style.display = 'none';
+//         document.getElementById('updateAppraisedValueInput').style.display = 'none';
+
+//         // Show input fields based on the selected property
+//         if (selectedProperty === 'size') {
+//             document.getElementById('sizeInputLabel').style.display = 'block';
+//             document.getElementById('updateSizeInput').style.display = 'block';
+//         } else if (selectedProperty === 'owner') {
+//             document.getElementById('ownerInputLabel').style.display = 'block';
+//             document.getElementById('updateOwnerInput').style.display = 'block';
+//         } else if (selectedProperty === 'appraisedValue') {
+//             document.getElementById('appraisedValueInputLabel').style.display = 'block';
+//             document.getElementById('updateAppraisedValueInput').style.display = 'block';
+//         }
+// }
+
+
+/*document.getElementById('updateAssetBtn').addEventListener('click', async function () {
+    const assetIdToUpdate = document.getElementById('updateAssetIdInput').value;
+    const propertyToUpdate = document.getElementById('updatePropertySelect').value;
+    const colorToUpdate = document.getElementById('updateColorInput').value;
+    const sizeToUpdate = document.getElementById('updateSizeInput').value;
+    const ownerToUpdate = document.getElementById('updateOwnerInput').value;
+    const appraisedValueToUpdate = document.getElementById('updateAppraisedValueInput').value;
+
+    try {
+            const response = await axios.post(`http://localhost:3001/api/updateAsset/${assetIdToUpdate}`, {
+                property: propertyToUpdate,
+                newValue: propertyToUpdate === 'color' ? colorToUpdate : 
+                          propertyToUpdate === 'size' ? sizeToUpdate :
+                          propertyToUpdate === 'owner' ? ownerToUpdate :
+                          propertyToUpdate === 'appraisedValue' ? appraisedValueToUpdate : null
+            },{
+                headers: {
+                    'Content-Type': 'application/json'
+                }});
+            const resultContainer = document.getElementById('updateResult');
+            resultContainer.textContent = JSON.stringify(response.data);
+        } catch (error) {
+            console.error('Error updating asset:', error);
+        }
+});
+
+*/
+
+document.getElementById('updateAssetBtn').addEventListener('click', function () {
+    const id = document.getElementById('updateAssetIdInput').value;
+    const color = document.getElementById('updatecolorInput').value;
+    const size = document.getElementById('updatesizeInput').value;
+    const owner = document.getElementById('updateownerInput').value;
+    const appraisedValue = document.getElementById('updatevalueInput').value;
+    
+
+    // Perform the Axios POST request to update an asset
+    axios.post(`http://localhost:3001/api/updateAsset/${id}`, {
+        id: id,
+        color: color,
+        size: size,
+        owner: owner,
+        appraisedValue: appraisedValue
+    }, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    }).then(response => {
+        const resEle = document.getElementById('updateAsset');
+        resEle.textContent = JSON.stringify(response.data);
+        console.log(response.data);
+    }).catch(error => {
+        console.error('Error creating asset:', error);
+    });
+});
+
+
+</script>
+ 
+</body>
+</html>
+-->
